@@ -1,50 +1,59 @@
-# Hux blog 模板
+# this theme
 
-### [我的博客在这里 &rarr;](http://huxpro.github.io)
+ 如果喜欢这个模版可以直接fork我的仓库，再参考我的博文搭建属于你自己的blog，别忘了在`zengsiyong.github.io`这个repository点个赞——右上角**star**一下哦！ 😄.
 
+## 说明文档
+#### Environment
 
-### 关于收到"Page Build Warning"的email
+如果你安装了jekyll，那你只需要在命令行输入`jekyll serve`就能在本地浏览器预览主题。
 
-由于jekyll升级到3.0.x,对原来的pygments代码高亮不再支持，现只支持一种-rouge，所以你需要在 `_config.yml`文件中修改`highlighter: rouge`.另外还需要在`_config.yml`文件中加上`gems: [jekyll-paginate]`.
+#### 获取博客模板
 
-同时,你需要更新你的本地jekyll环境.
+> $ git clone https://github.com/zengsiyong/zengsiyong.github.io
 
-使用`jekyll server`的同学需要这样：
-
-1. `gem update jekyll` # 更新jekyll
-2. `gem update github-pages` #更新依赖的包
-
-使用`bundle exec jekyll server`的同学在更新jekyll后，需要输入`bundle update`来更新依赖的包.
-
-参考文档：[using jekyll with pages](https://help.github.com/articles/using-jekyll-with-pages/) & [Upgrading from 2.x to 3.x](http://jekyllrb.com/docs/upgrading/2-to-3/)
+或者直接[下载博客] https://github.com/zengsiyong/zengsiyong.github.io/archive/master.zip 
 
 
-## 关于模板(beta)
+clone到本地后，进zengsiyong.github.io/ 目录下， 开启本地服务 
 
-我的博客仓库——`huxpro.github.io`，是经常修改的，而且还会有人乱提交代码，因此给大家做了一个稳定版的模板。大家可以直接fork模板——`huxblog-boilerplate`,要改的地方我都说明了。或者可以直接下载zip到本地自己去修改。
+> $ bundle exec jekyll server
+
+在浏览器输入 [127.0.0.1:4000]， 就可以看到博客效果了。
+
+#### 如何将模版修改为自己的博客
+你可以通用修改clone到本地的仓库文件夹中的 `_config.yml`文件轻松的开始搭建自己的博客:
 
 ```
-$ git clone git@github.com:Huxpro/huxblog-boilerplate.git
+# Site settings
+title: 曾思勇_Blog             		# 你的博客网站标题
+SEOTitle: 曾思勇的Blog				# 显示在浏览器标题栏的名字
+description: "分析学习笔记的Blog"    # 简单地blog描述
+
+# SNS settings      
+github_username: zengsiyong     # 你的github账号
+
+# Build settings
+# paginate: 5              # 数值是一页你准备放几篇文章
+
 ```
 
-**[在这里预览模板 &rarr;](http://huangxuan.me/huxblog-boilerplate/)**
+要发表的文章一般以markdown的格式放在这里`_posts/`，你只要看看这篇模板里的文章你就立刻明白该如何设置。
 
-## 各版本特性
+yaml 头文件长这样:
 
-##### New Feature (V1.5.2)
+```
+---
+layout:     post
+title:      "Hello 2017"
+subtitle:   "Hello World, Hello Blog"
+date:       2017-04-15 10:05:00
+author:     "zengsiyong"
+header-img: "img/post-bg-2017.jpg"
+tags:
+    - Life
+---
 
-* 当你fork了我的仓库之后，还要删掉里面的关于我的文档是不是感到略烦躁呢？**Boilerplate** 模板将帮助你快速开始，方便合并与更新。
-* `-apple-system`被添加到了字体规则里面了，这套字体格式能将iOS9默认的新字体**San Francisco**表现的非常漂亮。
-* 解决了代码过长自动换行的bug,替换为横向滚动条。详情请见[issue#15](https://github.com/Huxpro/huxpro.github.io/issues/15)
-
-###### 其他历史版本个人觉得没有必要了解，看看英文就行了。
-
-
-
-## 支持
-
-* 你可以自由的fork。如果你能将主题作者和 github 的地址保留在你的页面底部，我将非常感谢你。
-* 如果你喜欢我的这个博客模板，请在`huxpro.github.io`这个repository点个赞——右上角**star**一下。
+```
 
 ## 说明文档
 
@@ -66,11 +75,7 @@ $ git clone git@github.com:Huxpro/huxblog-boilerplate.git
 	* [标题底图](#header-image)
 	* [搜索展示标题-头文件](#seo-title)
 
-#### Environment
-
-如果你安装了jekyll，那你只需要在命令行输入`jekyll serve`就能在本地浏览器预览主题。你还可以输入`jekyll serve --watch`，这样可以边修改边自动运行修改后的文件。
-
-经 [@BrucZhaoR](https://github.com/BruceZhaoR)的测试，好像两个命令都是可以的自动运行修改后的文件的，刷新后可以实时预览。官方文件是建议安装bundler，这样你在本地的效果就跟在github上面是一样的。详情请见这里：https://help.github.com/articles/using-jekyll-with-pages/#installing-jekyll
+详情请见这里：https://help.github.com/articles/using-jekyll-with-pages/#installing-jekyll
 
 
 #### Get Started
@@ -219,35 +224,7 @@ disqus_username: _你的用户名_
 # Baidu Analytics
 ba_track_id: 4cc1f2d8f3067386cc5cdb626a202900
 
-# Google Analytics
-ga_track_id: 'UA-49627206-1'            # 你用Google账号去注册一个就会给你一个这样的id
-ga_domain: huangxuan.me			# 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto。
-```
 
-#### Customization
-
-如果你喜欢折腾，你可以去自定义我的这个模板的 code，[Grunt](gruntjs.com)已经为你准备好了。（感谢 Clean Blog）
-
-JavaScript 的压缩混淆、Less 的编译、Apache 2.0 许可通告的添加与 watch 代码改动，这些任务都揽括其中。简单的在命令行中输入 `grunt` 就可以执行默认任务来帮你构建文件了。如果你想搞一搞 JavaScript 或 Less 的话，`grunt watch` 会帮助到你的。
-
-**如果你可以理解 `_include/` 和 `_layouts/`文件夹下的代码（这里是整个界面布局的地方），你就可以使用 Jekyll 使用的模版引擎 [Liquid](https://github.com/Shopify/liquid/wiki)的语法直接修改/添加代码，来进行更有创意的自定义界面啦！**
-
-#### Header Image
-
-标题底图是可以自己选的，看看几篇示例post你就知道如何设置了。在
-  [issue #6 ](https://github.com/Huxpro/huxpro.github.io/issues/6) 中我被问到：怎么样才能让标题底图好看呢？
-  
-标题底图的选取完全是看个人的审美了，我也帮不了你。每一篇文章可以有不同的底图，你想放什么就放什么，最后宽度要够，大小不要太大，否则加载慢啊。
-
-但是需要注意的是本模板的标题是**白色**的，所以背景色要设置为**灰色**或者**黑色**，总之深色系就对了。当然你还可以自定义修改字体颜色，总之，用github pages就是可以完全的个性定制自己的博客。
-
-#### SEO Title
-
-我的博客标题是 **“Hux Blog”** 但是我想要在搜索的时候显示 **“黄玄的博客 | Hux Blog”** ，这个就需要SEO Title来定义了。
-
-其实这个SEO Title就是定义了<head><title>标题</title></head>这个里面的东西和多说分享的标题，你可以自行修改的。
-
-## 致谢
 
 1. 这个模板是从这里[IronSummitMedia/startbootstrap-clean-blog-jekyll](https://github.com/IronSummitMedia/startbootstrap-clean-blog-jekyll)  fork 的。 感谢这个作者
 2. 感谢[@BrucZhaoR](https://github.com/BruceZhaoR)的中文翻译 
