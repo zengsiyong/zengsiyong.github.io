@@ -11,6 +11,6 @@ tags:
     - 写作
 ---
 
-### 建议通过简书阅读语法高亮完整版(http://www.jianshu.com/p/791cdfe3bb30，转载请保留链接 ;)
+### 建议通过简书阅读语法高亮完整版[简书链接](http://www.jianshu.com/p/791cdfe3bb30)
 
-![markdown简单实用入门语法_截图.jpg](http://upload-images.jianshu.io/upload_images/2762413-1ebd8068da0e629c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![Markdown简单实用入门语法.jpg](http://upload-images.jianshu.io/upload_images/2762413-d3abf37d39c3f233.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)

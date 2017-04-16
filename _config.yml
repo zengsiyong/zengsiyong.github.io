@@ -59,10 +59,6 @@ duoshuo_share: true                     # set to false if you want to use Commen
 # Baidu Analytics 
 ba_track_id: 7599730d873b5166907ad7ba5f270600
 
-# Google Analytics
-#ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-#ga_domain: huangxuan.me
-
 
 
 # Sidebar settings
@@ -81,6 +77,3 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 # Progressive Web Apps
 chrome-tab-theme-color: "#000000"
 service-worker: true
-
-
-]
