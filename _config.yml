@@ -1,9 +1,9 @@
 # Site settings
 title: 曾思勇
-SEOTitle: 曾思勇的博客 | Hux Blog
+SEOTitle: 曾思勇的Blog
 header-img: img/home-bg.jpg
 email: work4siyong@gmail.com
-description: "这里是 @曾思勇 的个人博客，与你一起发现更大的世界。"
+description: "发现更大的世界！"
 keyword: "曾思勇 zengsiyong"
 url: "https://zengsiyong.github.io"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'

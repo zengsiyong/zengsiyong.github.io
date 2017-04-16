@@ -55,73 +55,8 @@ tags:
 
 ```
 
-## 说明文档
+#### SideBar（显示在首页右边的个人资料部分）
 
-* 开始
-	* [环境要求](#environment)
-	* [开始](#get-started)
-	* [写一篇博文](#write-posts)
-* 组件
-	* [侧边栏](#sidebar)
-	* [迷你关于我](#mini-about-me)
-	* [推荐标签](#featured-tags)
-	* [好友链接](#friends)
-	* [HTML5 演示文档布局](#keynote-layout)
-* 评论与 Google/Baidu Analytics
-	* [评论](#comment)
-	* [网站分析](#analytics) 
-* 高级部分
-	* [自定义](#customization)
-	* [标题底图](#header-image)
-	* [搜索展示标题-头文件](#seo-title)
-
-详情请见这里：https://help.github.com/articles/using-jekyll-with-pages/#installing-jekyll
-
-
-#### Get Started
-
-你可以通用修改 `_config.yml`文件来轻松的开始搭建自己的博客:
-
-```
-# Site settings
-title: Hux Blog             # 你的博客网站标题
-SEOTitle: Hux Blog			# 在后面会详细谈到
-description: "Cool Blog"    # 随便说点，描述一下
-
-# SNS settings      
-github_username: huxpro     # 你的github账号
-weibo_username: huxpro      # 你的微博账号，底部链接会自动更新的。
-
-# Build settings
-# paginate: 10              # 一页你准备放几篇文章
-```
-
-Jekyll官方网站还有很多的参数可以调，比如设置文章的链接形式...网址在这里：[Jekyll - Official Site](http://jekyllrb.com/) 中文版的在这里：[Jekyll中文](http://jekyllcn.com/).
-
-#### write-posts
-
-要发表的文章一般以markdown的格式放在这里`_posts/`，你只要看看这篇模板里的文章你就立刻明白该如何设置。
-
-yaml 头文件长这样:
-
-```
----
-layout:     post
-title:      "Hello 2015"
-subtitle:   "Hello World, Hello Blog"
-date:       2015-01-29 12:00:00
-author:     "Hux"
-header-img: "img/post-bg-2015.jpg"
-tags:
-    - Life
----
-
-```
-
-#### SideBar
-
-看右边:
-![](http://huangxuan.me/img/blog-sidebar.jpg)
 
 设置是在 `_config.yml`文件里面的`Sidebar settings`那块。
 ```
@@ -154,25 +89,6 @@ featured-condition-size: 1     # A tag will be featured if the size of it is mor
 内部有一个条件模板 `{% if tag[1].size > {{site.featured-condition-size}} %}` 是用来做筛选过滤的.
 
 
-#### Friends
-
-好友链接部分。这会在全部页面显示。
-
-设置是在 `_config.yml`文件里面的`Friends`那块，自己加吧。
-
-```
-# Friends
-friends: [
-    {
-        title: "Foo Blog",
-        href: "http://foo.github.io/"
-    },
-    {
-        title: "Bar Blog",
-        href: "http://bar.github.io"
-    }
-]
-```
 
 
 #### Keynote Layout
