@@ -14,7 +14,7 @@ baseurl: ""                             # for example, '/blog' if your blog host
 RSS: false
 github_username:    zengsiyong
 facebook_username:  siyong zeng
-# linkedin_username:  firstname-lastname-idxxxx
+jianshu_username:   zengsiyong
 
 
 
@@ -83,17 +83,4 @@ chrome-tab-theme-color: "#000000"
 service-worker: true
 
 
-
-# Friends
-Friends: [
-    {
-        title: "Su",
-        href: "http://su.gallery/"
-    },{
-        title: "乱序",
-        href: "http://mida.re/"
-    },{
-        title: "前端外刊评论",
-        href: "http://qianduan.guru/"
-    }
 ]
