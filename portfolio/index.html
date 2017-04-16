@@ -18,7 +18,7 @@ layout: default
 			<header>
 				<img width="175" height="175" style="border-radius:50%;" src="/img/me.jpg">
 				<h2>Recommend</h2>
-				<p>推荐有趣的 Web & App </p>
+				<p>推荐有趣的 Web & App & Tool </p>
 			</header>
 			<div class="main">
 				<ul class="cbp_tmtimeline">
@@ -37,21 +37,6 @@ layout: default
 							</ul>
 						</div>
 					</li>
-					{% if site.duoshuo_username %}
-					<li>
-						<div class="cbp_tmlabel">
-			                <!-- 多说评论框 start -->
-			                <div class="comment">
-			                    <div class="ds-thread"
-									data-thread-key="{{site.duoshuo_username}}/portfolio"
-			                        data-title="{{page.title}}"
-			                        data-url="{{site.url}}{{site.baseurl}}{{page.url}}" >
-			                    </div>
-			                </div>
-			                <!-- 多说评论框 end -->
-						</div>
-					</li>
-					{% endif %}
 				</ul>
 			</div>
 		</div>
