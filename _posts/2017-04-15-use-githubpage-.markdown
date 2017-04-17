@@ -14,6 +14,9 @@ tags:
 
 
 这是搭建的博客效果：[曾思勇的博客](http://zengsiyong.github.io)
+![博客截图.jpg](http://upload-images.jianshu.io/upload_images/2762413-57a328f720b8e854.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+[博文简书链接](http://www.jianshu.com/p/64864a179c2e)
+
 ### 一、Github Pages + Jekyll  是什么
 
 + #### Github:
@@ -182,12 +185,18 @@ $ git push //把当前版本提交到远程仓库
 $ cd {local repository} // {local repository}替换成你的本地仓库的目录
 $ jekyll serve
 ```
-如果不能成功执行，请参照的的另外一篇博文：  [[17年重整版]Jekyll搭建个人博客]()，搭建jekyll运行环境。
+如果不能成功执行，请参照的我的另外一篇博文：  [[17年重整版]Jekyll搭建个人博客（简书链接）](http://www.jianshu.com/p/64864a179c2e)，搭建jekyll运行环境。
+
 
 #### 八、参考文档
 [1][Github Pages](https://pages.github.com/)
+
 [2][Git教程 - 廖雪峰](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
+
 [3][Jekyll中文文档](http://jekyll.bootcss.com/)
+
 [4][使用Github Pages建独立博客](http://beiyuu.com/github-pages/)
+
 [5][亢志军博客](http://robotkang.cc/2017/03/HowToCreateBlog/)
+
 [6][独立博客一小时快速搭建](http://playingfingers.com/2016/03/26/build-a-blog/)（需要翻墙）
