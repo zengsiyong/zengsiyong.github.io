@@ -74,5 +74,50 @@ setTimeout("run",3000)方法为3秒后执行一次run方法
 * 在body标签中添加**onload事件**，并绑定一个带有定时器和更换图片源文件位置的函数
 ![设置定时器和改变图片资源文件目录的函数](http://upload-images.jianshu.io/upload_images/2762413-c8cb11910893cb3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+
+### 六、JS实现页面定时弹出广告
+* 预期效果：与JS实现轮播图片相同，通过onload绑定一个显示图片的定时操作函数，计时结束后执行显示广告图片函数，之后清除定时操作，再重新隐藏广告图片
+
+* 使用 **display属性的block/none值** 在页面指定位置 **显示/隐藏** 一个广告图片
+![display属性](http://upload-images.jianshu.io/upload_images/2762413-652d3b1608aecadb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+* **清除定时操作**
+![clearInterval方法介绍](http://upload-images.jianshu.io/upload_images/2762413-f2d53095513841f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+* 特别注意setInterval方法返回的id值赋值给的成员变量不能用var修饰，因为JS的函数中**如果成员变量用var修饰的话就成为局部变量**，则不能在其他函数中调用
+![var与成员变量.png](http://upload-images.jianshu.io/upload_images/2762413-747f8f3da3c6e06c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 七、用JS完善注册表单校验
+* 在input标签中添加**onclick聚焦事件**和**onblur**离焦事件，完成当鼠标点击输入框和鼠标点击另一个输入框后提示不同的内容
+![表单验证效果](http://upload-images.jianshu.io/upload_images/2762413-91996ca3cbfefa17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+* **代码重用**：相同的代码不变，**不同的代码用变量代替**
+![代码重用](http://upload-images.jianshu.io/upload_images/2762413-e097ef6555bf5a99.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 八、JS完成表单各行换色与高亮
+* 表格标签中包含的 **thead， th ，tbody** 标签
+![表格标签](http://upload-images.jianshu.io/upload_images/2762413-71f91d501fd05ea0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+* JS可以书写**匿名函数**
+* 注意当一个script标签中书写两个相同的 window.onload = funciton(){} ，则最新的会覆盖之前的
+![JS的匿名函数](http://upload-images.jianshu.io/upload_images/2762413-7ccc2676475e8ddf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+* 通过**onmouseover/onmouseout** 鼠标悬停和移除事件设置表格当前行数高亮
+* 获取标签后设置css样式
+![获取标签并修改css样式](http://upload-images.jianshu.io/upload_images/2762413-9c2d9373201fc697.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 九、使用JS完成注册表单的省市二级联动
+* **onchange**：当用户改变内容时使用这个事件（二级联动）
+* 使用方法传参的方式：**this.value** 获取用户选择的省份的value值，this代表当前操作对象
+![this.value传递选择选项的value值](http://upload-images.jianshu.io/upload_images/2762413-51ac2da80674a79d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+* 使用一个**二维数组**来储存省份和城市（从数据库中导入），并通过**遍历数组**来获取省份与用户选择的省份比较，如果相同了继续遍历该省份下所有的城市。
+![创建二维数组.png](http://upload-images.jianshu.io/upload_images/2762413-fa2aeb06e92cd46b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+* **DOM文档对象模型**中**创建节点、文本节点、添加子节点**等常用的方法
+![DOM常用方法.png](http://upload-images.jianshu.io/upload_images/2762413-6a5fc8858713f871.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+* JS内置对象中Array对象的**数组长度可变**，数组的**长度为最大角标加1**
+
 #### 源码下载
 [github链接](https://github.com/zengsiyong/GoodGoods)
