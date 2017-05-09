@@ -1,0 +1,273 @@
+---
+layout:     post
+title:      "jQuery小结"
+date:       2017-05-08 20:00:00
+author:     "曾思勇"
+header-img: "img/cala.jpg"
+header-mask: 0.3
+catalog:    true
+tags:
+    - 前端
+---
+
+
+### 一、页面加载
+* JQ的页面加载比JS要快，当整个dom树结构生成完毕后就会加载
+* JQ页面加载不存在覆盖问题，加载的时候是顺序执行
+* JQ的页面加载最简写的方式为：
+```
+$(function(){
+        alert("显示页面加载内容");
+})
+//对比JS的页面加载为：
+window.onload = function(){
+        alert("显示页面加载内容");
+}
+```
+### 二、JQ的获取
+```
+<script type="text/javascript" src="../../js/jquery-1.8.3.js" ></script>
+		<script>
+			$(function(){
+				//1.JS方式获取
+				/*document.getElementById("btn").onclick= function(){
+					location.href="惊喜.html";
+				}*/
+				
+				//2.JQ方式获取=====>>>$("#btn")
+				$("#btn").click(function(){
+					location.href="惊喜.html"
+				});
+			});
+		</script>
+```
+
+### 三、DOM对象和HQ对象的转化
+* **注意JQ不能操作JS中的属性和方法，一样的DOM对象也无法操作JQ对象里面的属性和方法！！！**
+* JQ的html()方法：取得第一个匹配元素的html内容。
+* JQ的html(val)方法：用于设定HTML内容的值，其中val是String类型
+```
+//1.JS的DOM操作
+function write1(){
+        document.getElementById("span1").innerHTML = "js的dom操作";
+}        
+//2.JQ的DOM操作
+$(function(){
+        $("btn").click(function){
+         //注意JQ不能操作JS中的属性和方法，例如 $("span1").innerHTML=""的写法是错的
+                $("span1").html("jq的dom操作")
+        });
+})
+```
+* **JQ对象向DOM对象转化**：使用jQuery 对象访问中的**get()**方法可以取得所有匹配的DOM元素集合，**get(index)**可以**取得其中一个匹配的元素**，即可调用JS中的属性方法。图中使用的是元素选择器，即可以通过角标获取多个
+![JQ对象向DOM对象转化](http://upload-images.jianshu.io/upload_images/2762413-96a5cb4fdf17193f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+* **将DOM对象转换成JQ对象**：直接把dom对象用$括起来
+```
+        var spanEle = document.getElementById("span1");
+        //将DOM对象转换成JQ对象
+        $(spanEle).html("DOM对象转换成JQ对象");
+```
+* JQ效果中的方法可以实现淡入淡出，上下滑入滑出，使用toggle可以实现一个标签的显示和隐藏
+![toggle实现标签的显示和隐藏](http://upload-images.jianshu.io/upload_images/2762413-0afc8ada6f6af11d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 四、JQ选择器
+* **基本选择器：**
+**id选择器**：$(“#id名称”);
+**元素选择器**：$(“元素名称”);
+**类选择器**：$(“.类名”);
+**通配符**：\*
+**多个选择器共用**(并集),在同一个括号中使用 **空格隔开**
+
+* **层级选择器：**
+ancestor descendant: 在给定的祖先元素下匹配所有的后代元素(儿子、孙子、重孙子)
+parent > child : 在给定的父元素下匹配所有的子元素(儿子)
+prev + next: 匹配所有紧接在 prev 元素后的 next 元素(紧挨着的，同桌)
+prev ~ siblings: 匹配 prev 元素之后的所有 siblings 元素(兄弟)
+![层级选择器](http://upload-images.jianshu.io/upload_images/2762413-bbc8e6e78cbd6eeb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+ 
+* **基本过滤选择器：**
+$('li').first() 等价于：$(“li:first”)
+![基本过滤选择器](http://upload-images.jianshu.io/upload_images/2762413-5b9a15a8fe2e4241.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 五、案例——使用JQ完成表格的隔行换色
+1. 需求分析
+在页面加载的时候让显示用户的表格进行隔行换色显示，效果如下：使用JQ实现！
+2. 技术分析
+需要使用jquery的选择器(基本选择器、基本过滤选择器)
+还需要使用jquery的CSS的方法(css(name,value))
+如果CSS样式已经由美工写好，此时可以使用jquery的CSS类操作
+`css类：addClass(class | fn)`
+3. 步骤分析
+第一步：引入jquery的类库
+第二步：直接写页面加载函数
+第三步：直接使用jquery的选择器(组合选择)拿到需要操作的元素(奇数行和偶数行)
+第四步：分别使用CSS的方法(css(name,value))对奇数行和偶数行设置背景颜色。
+4. 代码实现
+
+```
+<script type = "text/javascript" src = "../js/jquery-1.8.3.js"></script>
+<link rel = "styylesheet" type = "text/css" href = "../css/style.css">
+<script>
+        $(function(){
+                //获取tbody标签中的偶数行
+                $("tbody tr:even").addClass("even");
+                //获取tbody标签中的奇数行
+                $("tbody tr:odd").addClass("odd);
+        })
+</script>
+```
+
+### 六、案例——使用JQ完成全选和全不选
+1. 需求分析
+在系统后台进行人员管理时，进行批量删除，使用jq完成全选和全不选
+![全选需求分析.png](http://upload-images.jianshu.io/upload_images/2762413-2f5f58e847758a51.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+2. 技术分析
+需要使用jquery的选择器(id选择器、类选择器)
+需要使用jquery的属性操作方法 attr()或者prop()
+
+3. 步骤分析
+第一步：引入jquery文件
+第二步：书写页面加载函数
+第三步：为上面的复选框绑定单击事件
+第四步：将下面所有的复选框的选中状态设置成跟上面的一致！
+
+4. 代码实现
+
+```
+<script type = "text/javascript" src = "../js/jquery-1.8.3.js"></script>
+<script>
+        $(function(){
+                //找到下面所有的复选框并设置属性checked()
+                $("#select").click(function(){
+                        //attr在jquery1.11版本不适用，采用prop()来替代(在各个版本都适用)
+                        //使用选择框中input标签已有的类 class="selectOne"
+                        $(".selectOne").attr("checked",this.checked);
+                        //使用选择框中input标签，不使用其他类属性
+                        $("tbody input").prop("checked",this.checked);
+                        //使用this.checked使选择框中是否选中状态与表头 id="select" 的选择框选择状态相同，如果
+                });
+        });
+</script>
+```
+
+### 七、数组的遍历操作
+* 方式一：
+  1. jQuery对象访问方式中的 **each(callback)**
+![each(callback)](http://upload-images.jianshu.io/upload_images/2762413-166e84c48b547aee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+  2. 全选/全不选案例示例代码
+  
+```
+$(function(){
+        $("#checkallbox").click(function){
+                var isChecked = this.checked;
+                //使用对象访问的方式进行遍历，语法：$().each(function(){})
+                $("input[name = 'hobby']").each(function(){
+                          this.checked = isChecked;
+                });
+        });
+});
+```
+
+
+* 方式二：
+  1. 数组和对象操作中的 $.each(object,[callback])
+![$.each(object,[callback])](http://upload-images.jianshu.io/upload_images/2762413-7a87ffe051039554.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+  2. object为被遍历的对象或数组，即如下示例代码中的[0,1,2]，其中i为角标，n为被遍历后的内容
+  
+```
+        $.each( [0,1,2] , function(i , n ){
+                alert( "Item #" + i + ": " + n );
+        });
+```
+
+### 八、文档处理操作
+* 追加内容
+apend:  A.append(B)  将B追加到A的内容的末尾处
+appendTo: A.appendTo(B)  将A加到B内容的末尾处
+* 删除内容
+empty: 删除匹配元素集合中的所有的子节点。
+remove: 从DOM中删除所有匹配的元素
+![remove](http://upload-images.jianshu.io/upload_images/2762413-4262de8cbb63247b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+* 案例——省市联动
+
+```
+<script type="text/javascript" src="../js/jquery-1.8.3.js" ></script>
+		<script>
+			$(function(){
+				//2.创建二维数组用于存储省份和城市
+				var cities = new Array(3);
+				cities[0] = new Array("武汉市","黄冈市","襄阳市","荆州市");
+				cities[1] = new Array("长沙市","郴州市","株洲市","岳阳市");
+				cities[2] = new Array("石家庄市","邯郸市","廊坊市","保定市");
+				cities[3] = new Array("郑州市","洛阳市","开封市","安阳市");
+				
+				$("#province").change(function(){
+					//10.清除第二个下拉列表的内容
+					$("#city").empty();
+					
+					//1.获取用户选择的省份
+					var val = this.value;
+					//alert(val);
+					//3.遍历二维数组中的省份
+					$.each(cities,function(i,n){
+						//alert(i+":"+n);
+						//4.判断用户选择的省份和遍历的省份
+						if(val==i){
+							//5.遍历该省份下的所有城市
+							$.each(cities[i], function(j,m) {
+								//alert(m);
+								//6.创建城市文本节点
+								var textNode = document.createTextNode(m);
+								//7.创建option元素节点
+								var opEle = document.createElement("option");
+								//8.将城市文本节点添加到option元素节点中去
+								$(opEle).append(textNode);
+								//9.将option元素节点追加到第二个下拉列表中去
+								$(opEle).appendTo($("#city"));
+							});
+						}
+					});
+					
+				});
+			});
+		</script>
+```
+
+### 九、jQuery事件(常用)
+* 事件绑定
+  1. 案例——单击显示/关闭新内容：使用绑定事件 bind(type,[data],fn)，如下代码中
+ bind 绑定单击事件 "click"，绑定的事件内容是 function(){}。（注意代码中的方法可以等效为JQ事件切换中的toggle()）
+![绑定事件 bind(type,[data],fn)](http://upload-images.jianshu.io/upload_images/2762413-1f9374fb32ee4095.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+  2. 案例——鼠标滑过内容变换:（注意代码中的方法可以等效为JQ事件切换中的hover()）
+![Paste_Image.png](http://upload-images.jianshu.io/upload_images/2762413-a435d875e0e6e532.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 十、JQ的validation插件完成对表单数据的校验优化
+* 特点：
+内置验证规则：拥有必填、数字、email、url和信用卡号码等19类内置验证规则
+自定义验证规则：可以很方便的自定义验证规则
+* 调用语法：$("表单id").validate({});
+* rules 规则语法：
+
+```
+        rules:{
+                字段名:校验器，
+                字段名:校验器
+        }
+```
+* 校验器语法：
+
+```
+       语法：{校验器:值，校验器:值}
+```
+* message 提示语法：
+
+```
+        message:{
+                字段名:{校验器:"提示", 校验器:"提示",....}
+        }
+```
+![validation插件的使用示例代码](http://upload-images.jianshu.io/upload_images/2762413-516d000567638421.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
