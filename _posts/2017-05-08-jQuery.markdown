@@ -271,3 +271,5 @@ remove: 从DOM中删除所有匹配的元素
         }
 ```
 ![validation插件的使用示例代码](http://upload-images.jianshu.io/upload_images/2762413-516d000567638421.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+[简书链接](http://www.jianshu.com/p/01c065c2e6ed)
