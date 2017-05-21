@@ -1,0 +1,133 @@
+---
+layout:     post
+title:      "sql多表查询"
+date:       2017-05-20 16:00:00
+author:     "曾思勇"
+header-img: "img/sql.jpg"
+header-mask: 0.3
+catalog:    true
+tags:
+    - 数据库
+---
+
+
+### 一、表的关系分析：
+* **用户和订单**：一个用户可以有多个订单，但每个订单只能属于一个用户，所以是一对多的关系。
+
+* **商品和分类**：一个产品只能有一种分类，而一个分类可以有多种产品，所以是多对一的关系。
+
+* **订单和商品**：一个订单可以有多个商品，一个商品可以有多个订单，所以是多对多的关系。
+
+### 二、主从表与主外键
+* 当两张表的关系是一对多的时候，一代表主表，多代表从表，在从表设置外键执行主表的主键，以下是代码所用的表结构：表category，表product
+![表category.png](http://upload-images.jianshu.io/upload_images/2762413-b4d83cbc19f6d00e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![表product](http://upload-images.jianshu.io/upload_images/2762413-33aa0d4dd64528cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+注意插入数据时需要先设置 `set names gbk`
+
+* **声明外键约束:**
+alter table 从表 add [constraint] [外键名称] foreign key (从表外键字段名) references 主表 （主表的主键）
+**注意**：外键名称用于删除外键约束的，一般建议以“_fk”结尾
+* **删除外键约束**：
+alter table 从表 drop foreign key 外键名称
+![Paste_Image.png](http://upload-images.jianshu.io/upload_images/2762413-a11064cfeeb52ea3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+**注意事项**
+* 从表外键不能添加主表中不存在的记录
+* 主表不能删除从表中已经引用的记录
+
+### 三、建表规则总结
+* **一对多的建表原则**：在多的一方创建一个字段，字段作为外键指向的一方的主键
+![一对多的建表原则](http://upload-images.jianshu.io/upload_images/2762413-d2e0aff2ea1e4593.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+* **多对多建表原则**：两张表之间多对多的关系需要通过创建第三张表，也称为中间表，中间表中至少有有两个字段分别作为外键指向各自一方的主键
+![多对多建表原则](http://upload-images.jianshu.io/upload_images/2762413-84fdb231264af22b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 四、**多表查询**
+* 内连接（用的比较多）
+  * 普通(显示)内连接：前提条件需要有外键，提交的关键字是 inner join ... on
+`select * from A inner join B on 条件; `
+  * 隐式内连接（用的是最多的）：可以省略inner join ... on 关键字
+`select * from A,B where 条件 `
+
+* 外连接
+  * 左连接（看左表,即sql语句中 left 关键字前的表）：前提条件需要外键，使用关键字 left join ... on
+`select * from dept left outer join emp on dept.did = emp.dno`
+  * 右连接（看右表与左连接相反）
+![内连接和外连接的区别](http://upload-images.jianshu.io/upload_images/2762413-1a68f35ed9cc933e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+* 子查询：一条select语句结果作为另一条select语法的一部分（查询条件、查询结果、表等）
+
+
+### 五、案例：
+* 本题用到下面三个关系表：
+CARD     借书卡。   CNO 卡号，NAME 姓名，CLASS 班级
+BOOKS    图书。     BNO 书号，BNAME 书名,AUTHOR 作者，PRICE 单价，QUANTITY 库存册数
+BORROW   借书记录。 CNO 借书卡号，BNO 书号，RDATE 还书日期
+备注：限定每人每种书只能借一本；
+
+* 要求实现如下15个处理：
+
+1．找出借书超过5本的读者,输出借书卡号及所借图书册数。(2分)
+
+`
+SELECT CNO,COUNT(*) FROM BORROW GROUP BY CNO HAVING COUNT(*)>5
+`
+
+2．查询借阅了"水浒"一书的读者，输出姓名及班级。(3分)
+
+`
+SELECT * FROM CARD c WHERE EXISTS(SELECT * FROM BORROW a，BOOKS b WHERE a.BNO = b.BNO AND b.BNAME=N‘水浒’ AND a.CNO=c.CNO)
+`
+
+3．查询过期未还图书，输出借阅者（卡号）、书号及还书日期。(3分)
+
+`
+SELECET CNO AS "卡号"，BNO as "书号"，RDATE as "还书日期" FROM BORROW WHERE RDATE < NOW();
+`
+
+4．查询书名包括"网络"关键词的图书，输出书号、书名、作者。(2分)
+
+`
+SELECET BNO,BNAME,AUTHOR FROM BOOKS WHERE BNAME LIKE "%网络%"
+`
+
+5．查询现有图书中价格最高的图书，输出书名及作者。(2分)
+
+`
+SELECET BNAME,AUTHOR FROM BOOKS WHERE PRICE = (SELECT MAX(PRICE) FROM BOOKS)
+`
+
+6．查询当前借了"计算方法"但没有借"计算方法习题集"的读者，输出其借书卡号，并按卡号降序排序输出。(4分)
+
+`
+SELECET bo.CNO FORM BORROW bo,BOOKS WHERE bo.BNO = BOOKS.BNO and BOOKS.BNAME="计算方法" AND NOT EXISTS(SELECT * FORM BORROW r，BOOKS b WHERE r.BNO = b.BNO AND b.BNAME="计算方法题集") ORDER BY bo.CNO DESC;
+`
+
+7．将"C01"班同学所借图书的还期都延长一周。(2分)
+
+`
+UPDATA bo SET RDATE=DATEADD(Day,7,bo.RDATE) FROM CARD c,BORROW bo WHERE c.CNO=b.CNO AND c.CLASS="c01";
+`
+
+8．从BOOKS表中删除当前无人借阅的图书记录。(2分)
+
+`
+DELETE FROM BOOKS WHRER BNO NOT IN (SELECT DISTINCT BNO FROM BORROW)
+`
+
+9．在BORROW表上建立一个触发器，完成如下功能：如果读者借阅的书名是"数据库技术及应用"，就将该读者的借阅记录保存在BORROW_SAVE表中（注ORROW_SAVE表结构同BORROW表）。(4分)
+
+10．建立一个视图，显示"力01"班学生的借书信息（只要求显示姓名和书名）。(3分)
+
+11．查询当前同时借有"计算方法"和"组合数学"两本书的读者，输出其借书卡号，并按卡号升序排序输出。(3分)
+
+　
+* 运用到的知识点
+![排序和聚合](http://upload-images.jianshu.io/upload_images/2762413-c9ba939a6cb6de8e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![分组和常见查询语句格式](http://upload-images.jianshu.io/upload_images/2762413-d17fa1a3b1abfb21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![多表查询](http://upload-images.jianshu.io/upload_images/2762413-865abc75b5575cf8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![子查询](http://upload-images.jianshu.io/upload_images/2762413-92cbbfcdee5c4028.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
