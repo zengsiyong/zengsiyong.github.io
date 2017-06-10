@@ -3,7 +3,7 @@ layout:     post
 title:      "sql多表查询"
 date:       2017-05-20 16:00:00
 author:     "曾思勇"
-header-img: "img/sql.jpg"
+header-img: "img/sky2.jpg"
 header-mask: 0.3
 catalog:    true
 tags:
