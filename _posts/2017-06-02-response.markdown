@@ -1,0 +1,150 @@
+---
+layout:     post
+title:      "response"
+date:       2017-06-02 10:00:00
+author:     "曾思勇"
+header-img: "img/sky2.jpg"
+header-mask: 0.3
+catalog:    true
+tags:
+    - web服务器技术
+---
+
+
+### 一、HttpServletResponse概述
+创建Servlet时会覆盖service()方法，或doGet()/doPost()
+这些方法都有两个参数，一个为代表请求的request和代表响应response。
+* service方法中的response的类型是ServletResponse
+* doGet/doPost方法的response的类型是HttpServletResponse，HttpServletResponse是ServletResponse的子接口，功能和方法更加强大，本文使用的是HttpServletResponse。
+
+### 二、response的运行流程
+![](http://upload-images.jianshu.io/upload_images/2762413-bd6c05f10152d2f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 三、通过抓包工具抓取Http响应
+![](http://upload-images.jianshu.io/upload_images/2762413-f0a4f10c7168c99a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+因为response代表响应，所以我们可以通过该对象分别设置Http响应的响应行，响应头和响应体
+
+### 四、通过response设置响应行的状态码
+        setStatus(int sc)
+（一般不用自己设置状态码）
+
+### 五、通过response设置响应头
+```
+addHeader(String name, String value) 
+addIntHeader(String name, int value) 
+addDateHeader(String name, long date) 
+
+//这个方法最重要
+setHeader(String name, String value) 
+
+setDateHeader(String name, long date) 
+setIntHeader(String name, int value)
+```
+其中，add表示添加，而set表示设置
+![](http://upload-images.jianshu.io/upload_images/2762413-a84d84f3007b1b1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+* 重定向
+概念：相当于找第一个人借钱时他说没钱，然后让你去找第二个人
+![](http://upload-images.jianshu.io/upload_images/2762413-0e5c197a15a191ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+实例代码：状态码设置为302，响应头中的location代表重定向的地址
+![Paste_Image.png](http://upload-images.jianshu.io/upload_images/2762413-f885c6a8b0900671.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+实例：访问RefreshServlet后5秒后就会跳转到百度的页面
+![Paste_Image.png](http://upload-images.jianshu.io/upload_images/2762413-e0da4286b2c36506.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 六、通过response设置响应体
+(1)响应体设置文本
+PrintWriter getWriter()
+
+获得字符流，通过字符流的write(String s)方法可以将字符串设置到response	缓冲区中，随后Tomcat会将response缓冲区中的内容组装成Http响应返回给浏览	器端。
+
+**关于设置中文的乱码问题**
+**原因**：response缓冲区的默认编码是iso8859-1，此码表中没有中文，可以通过	response的setCharacterEncoding(String charset) 设置response的编码
+ 
+**但我们发现客户端还是不能正常显示文字**
+
+**原因**：我们将response缓冲区的编码设置成UTF-8，但浏览器的默认编码是本地系	统的编码，因为我们都是中文系统，所以客户端浏览器的默认编码是GBK，我们可以手动修改浏览器编码是UTF-8（但面向客户的话此方法很麻烦）。
+
+我们还可以在代码中指定浏览器解析页面的编码方式，
+通过response的setContentType(String type)方法指定页面解析时的编码是UTF-8
+```
+response.setContentType("text/html;charset=UTF-8");
+```
+上面的代码不仅可以指定浏览器解析页面时的编码，同时也内含		setCharacterEncoding的功能
+
+**所以在实际开发中只要编写**	          
+```
+response.setContentType("text/html;charset=UTF-8");
+```
+**就可以解决页面输出中文乱码问题。**
+
+(2)响应头设置字节
+
+ServletOutputStream  getOutputStream()
+
+获得字节流，**通过该字节流的write(byte[] bytes)可以向response缓冲区中写入字	节**，在由Tomcat服务器将字节内容组成Http响应返回给浏览器。
+
+实例：用字节流传输一张图片,浏览器页面获得输出的图片信息会自动解析渲染
+![Paste_Image.png](http://upload-images.jianshu.io/upload_images/2762413-8d6a303809faf88e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+注意上面用到的inputStream和outputStream的方法
+```
+inputstream的read (byte[] b) ：
+//从输入流中读取一定数量的字节，并将其存储在缓冲区数组 b 中。以整数形式返回实际读取的字节数。
+```
+```
+void write(byte[] b, int off, int len)
+//将指定 byte 数组中从偏移量 off 开始的 len 个字节写入此输出流。
+```
+
+### 七、案例-完成文件下载
+* 文件下载的实质就是文件拷贝，将文件从服务器端拷贝到浏览器端。所以文件下载需要IO技术将服务器端的文件使用InputStream读取到，再使用	ServletOutputStream写到response缓冲区中
+
+* 因为浏览器直接解析例如图片等能够解析的内容显示在页面上，默认不是提供下载，所以我们需要设置两个响应头，告知浏览器文件的类型和文件的打开方式。
+1）告知浏览器文件的类型：
+response.setContentType(文件的MIME类型);
+2）告示浏览器文件的打开方式是下载：
+response.setHeader("Content-Disposition","attachment;filename=文件名称");
+可以将图片从服务器端传输到浏览器，但
+
+* 完整代码如下：
+![Paste_Image.png](http://upload-images.jianshu.io/upload_images/2762413-0f2cb7a238e4cf05.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+* **如果文件名为中文的情况下需要添加如下代码**
+```
+		//获得要下载的文件的名称
+		String filename = request.getParameter("filename");//????.jpg
+		//解决获得中文参数的乱码
+		filename = new String(filename.getBytes("ISO8859-1"),"UTF-8");//中文名.jpg
+		//获得请求头中的User-Agent
+		String agent = request.getHeader("User-Agent");
+		//根据不同浏览器进行不同的编码
+		String filenameEncoder = "";
+		if (agent.contains("MSIE")) {
+			// IE浏览器
+			filenameEncoder = URLEncoder.encode(filename, "utf-8");
+			filenameEncoder = filenameEncoder.replace("+", " ");
+		} else if (agent.contains("Firefox")) {
+			// 火狐浏览器
+			BASE64Encoder base64Encoder = new BASE64Encoder();
+			filenameEncoder = "=?utf-8?B?"
+					+ base64Encoder.encode(filename.getBytes("utf-8")) + "?=";
+		} else {
+			// 其它浏览器
+			filenameEncoder = URLEncoder.encode(filename, "utf-8");				
+		}
+```
+![](http://upload-images.jianshu.io/upload_images/2762413-b049480f13bc42f7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 八、案例——验证码
+* 概念
+  1.验证码是一张图片，是在后台通过java代码动态生成的，可以直接使用模版代码
+  2.验证码上的数字是随机产生的
+  3.生成图片后能在页面显示是通过outputstream的write方法把图片内容写入到response缓冲区
+  4.在html文件中的验证码图片标签中添加自动生成图片的Servlet页面路径，并添加单击事件实现点击更换验证码图片
+![](http://upload-images.jianshu.io/upload_images/2762413-4aa2f494c75ba471.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+### 九、response注意点
+* response获得的流不需要手动关闭，Tomcat容器会帮助我们关闭
+* getWriter和getOutoutStream不能同时调用
