@@ -12,7 +12,7 @@ tags:
 
 
 本文使用简单的 **html标签+div+css+JavaScript** 实现带有表单提交和图片轮播效果的商城网站设计，效果如下图，[源码下载github链接](https://github.com/zengsiyong/GoodGoods)（以下仅列举设计过程中的部分注意点）
-![精品小屋首页.jpg](http://upload-images.jianshu.io/upload_images/2762413-8aab9efd9af27faa.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![精品小屋首页.jpg](http://upload-images.jianshu.io/upload_images/2762413-db2ff5406b72da9a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 一、搭建网站首页
 * **首页的所有内容可以放置在一个大的table标签中，再通过嵌入表格划分模块，并使用div+css在各个模块中添加居中等css效果**
@@ -48,7 +48,7 @@ tags:
 
 ![框架结构标签的应用](http://upload-images.jianshu.io/upload_images/2762413-1eee1a467a4d8eb5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-![效果图](http://upload-images.jianshu.io/upload_images/2762413-fe821b0c9c4bac81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/560)
+![效果图](http://upload-images.jianshu.io/upload_images/2762413-a1becb4132dabad7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 四、JS完成表单校验
 * **在form标签添加onsubmit事件,并为其绑定一个函数**
@@ -65,7 +65,14 @@ tags:
 
 ![正则表达式验证邮箱](http://upload-images.jianshu.io/upload_images/2762413-daf50ead21c0d65d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 五、JS实现图片轮播
+### 五、bootstrap的登入表单
+* 在html头中引入bootstrap库文件
+![](http://upload-images.jianshu.io/upload_images/2762413-07731a3f1e9d32a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+* 在body中写入登入表单代码
+![image.png](http://upload-images.jianshu.io/upload_images/2762413-073c327d039af92c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+### 六、JS实现图片轮播
 * **定时器**：BOM浏览器对象模型中window窗口对象的定时器方法， 结果都将返回一个唯一的id值，一般用于清除定时器
 ```
 setInterval("run",3000)方法为每隔3秒执行一次run方法
@@ -74,8 +81,13 @@ setTimeout("run",3000)方法为3秒后执行一次run方法
 * 在body标签中添加**onload事件**，并绑定一个带有定时器和更换图片源文件位置的函数
 ![设置定时器和改变图片资源文件目录的函数](http://upload-images.jianshu.io/upload_images/2762413-c8cb11910893cb3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+* 套用jquery代码实现手风琴轮播效果
+![](http://upload-images.jianshu.io/upload_images/2762413-ec35952c9f2397f7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 六、JS实现页面定时弹出广告
+效果图：
+![image.png](http://upload-images.jianshu.io/upload_images/2762413-d2d709a6b2aa10c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 七、JS实现页面定时弹出广告
 * 预期效果：与JS实现轮播图片相同，通过onload绑定一个显示图片的定时操作函数，计时结束后执行显示广告图片函数，之后清除定时操作，再重新隐藏广告图片
 
 * 使用 **display属性的block/none值** 在页面指定位置 **显示/隐藏** 一个广告图片
@@ -87,14 +99,14 @@ setTimeout("run",3000)方法为3秒后执行一次run方法
 * 特别注意setInterval方法返回的id值赋值给的成员变量不能用var修饰，因为JS的函数中**如果成员变量用var修饰的话就成为局部变量**，则不能在其他函数中调用
 ![var与成员变量.png](http://upload-images.jianshu.io/upload_images/2762413-747f8f3da3c6e06c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 七、用JS完善注册表单校验
+### 八、用JS完善注册表单校验
 * 在input标签中添加**onclick聚焦事件**和**onblur**离焦事件，完成当鼠标点击输入框和鼠标点击另一个输入框后提示不同的内容
 ![表单验证效果](http://upload-images.jianshu.io/upload_images/2762413-91996ca3cbfefa17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 * **代码重用**：相同的代码不变，**不同的代码用变量代替**
 ![代码重用](http://upload-images.jianshu.io/upload_images/2762413-e097ef6555bf5a99.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 八、JS完成表单各行换色与高亮
+### 九、JS完成表单各行换色与高亮
 * 表格标签中包含的 **thead， th ，tbody** 标签
 ![表格标签](http://upload-images.jianshu.io/upload_images/2762413-71f91d501fd05ea0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -106,7 +118,7 @@ setTimeout("run",3000)方法为3秒后执行一次run方法
 * 获取标签后设置css样式
 ![获取标签并修改css样式](http://upload-images.jianshu.io/upload_images/2762413-9c2d9373201fc697.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 九、使用JS完成注册表单的省市二级联动
+### 十、使用JS完成注册表单的省市二级联动
 * **onchange**：当用户改变内容时使用这个事件（二级联动）
 * 使用方法传参的方式：**this.value** 获取用户选择的省份的value值，this代表当前操作对象
 ![this.value传递选择选项的value值](http://upload-images.jianshu.io/upload_images/2762413-51ac2da80674a79d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
